@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ktor-demo-svc
+spec:
+  selector:
+    app: ktor-demo-server
+  ports:
+    - port: 8124
+      targetPort: 8123
+  type: ClusterIP
