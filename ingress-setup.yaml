@@ -10,5 +10,5 @@ spec:
       paths:
       - path: /testpath(/|$)(.*)
         backend:
-          serviceName: ktor-demo-server-svc
+          serviceName: ktor-demo-svc
           servicePort: 8124
