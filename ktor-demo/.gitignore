@@ -2,6 +2,9 @@
 /.idea
 /out
 /build
+/app_base/build
+/app_a/build
+/app_b/build
 *.iml
 *.ipr
 *.iws

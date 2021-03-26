@@ -1,4 +1,5 @@
 # README.md
 
-- To setup a k8s cluster with ingress on Docker Desktop, see `steps-to-setup-cluster.md`.
-- To create the ktor-demo container image, see `ktor-demo/README.md`.
+- To set up a k8s cluster with ingress on Docker Desktop, see `steps-to-set-up-cluster.md`.
+- To deploy apps with service to service communication, see `deploy-distributed-apps-utilizing-dapr.md`.
+- To create the ktor-demo container images, see `ktor-demo/README.md`.
