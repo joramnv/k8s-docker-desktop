@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-b
+  labels:
+    app: app-b
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-b
+  template:
+    metadata:
+      labels:
+        app: app-b
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "app-b"
+        dapr.io/app-port: "8223"
+    spec:
+      containers:
+        - name: app-b
+          image: joramnv/ktor-demo-app-b:0.0.1-SNAPSHOT-powuv
+          ports:
+            - containerPort: 8223

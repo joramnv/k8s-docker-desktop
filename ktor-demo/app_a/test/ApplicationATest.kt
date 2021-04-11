@@ -7,21 +7,21 @@ import io.ktor.server.testing.withTestApplication
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ApplicationTest {
-    
+class ApplicationATest {
+
     @Test
     fun testRoot() {
-        withTestApplication({ module(testing = true) }) {
+        withTestApplication({ baseModule(testing = true); moduleA(testing = true) }) {
             handleRequest(HttpMethod.Get, "/").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
                 assertEquals("HELLO WORLD!", response.content)
             }
         }
     }
-    
+
     @Test
     fun testJsonGson() {
-        withTestApplication({ module(testing = true) }) {
+        withTestApplication({ baseModule(testing = true); moduleA(testing = true) }) {
             handleRequest(HttpMethod.Get, "/json/gson").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
                 assertEquals("{\"hello\":\"world\"}", response.content)

@@ -2,58 +2,44 @@ package com.joram
 
 import arrow.core.Either
 import arrow.core.right
-import arrow.fx.coroutines.kotlinx.suspendCancellable
-import com.sparetimedevs.pofpaf.handler.handle
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.features.CallLogging
 import io.ktor.features.ContentNegotiation
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
 import io.ktor.response.respondText
-import io.ktor.routing.Route
+import io.ktor.routing.get
 import io.ktor.routing.routing
-import io.ktor.util.pipeline.ContextDsl
-import io.ktor.util.pipeline.PipelineContext
-import io.ktor.routing.get as getWithoutCancelling
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
+fun Application.baseModule(testing: Boolean = false) {
+    install(CallLogging)
+
     install(ContentNegotiation) {
-        gson {
-        }
+        gson { }
     }
-    
+
     routing {
-        get("/") {
-            handle(
-                logic = {
-                    val domainLogic: Either<DomainError, String> = "HELLO WORLD!".right()
+        get("/health-check") {
+            Either.resolve(
+                f = {
+                    val domainLogic: Either<DomainError, String> = "Feeling pretty healthy today.".right()
                     domainLogic
                 },
-                ifSuccess = { a -> handleSuccessTextPlain(call, a) },
-                ifDomainError = { e -> handleDomainError(call, ::log, e) },
-                ifSystemFailure = { throwable -> handleSystemFailure(call, ::log, throwable) },
-                ifUnrecoverableState = ::log
-            )
-        }
-        
-        get("/json/gson") {
-            handle(
-                logic = {
-                    val domainLogic: Either<DomainError, Map<String, String>> = mapOf("hello" to "world").right()
-                    domainLogic
-                },
-                ifSuccess = { a -> handleSuccess(call, a) },
-                ifDomainError = { e -> handleDomainError(call, ::log, e) },
-                ifSystemFailure = { throwable -> handleSystemFailure(call, ::log, throwable) },
-                ifUnrecoverableState = ::log
+                success = { a -> handleSuccessTextPlain(call, a) },
+                error = { e -> handleDomainError(call, ::logError, e) },
+                throwable = { throwable -> handleSystemFailure(call, ::logError, throwable) },
+                unrecoverableState = { e -> logError(e) }
             )
         }
     }
@@ -97,10 +83,22 @@ suspend fun handleSystemFailure(
         call.respond(status = HttpStatusCode.InternalServerError, message = "Something went wrong. Sorry!")
     }
 
-private suspend fun <A> log(a: A): Either<Throwable, Unit> =
-    Unit.right() // Should implement logging.
+fun <E> logError(e: E): Either<Throwable, Unit> =
+    Either.catch {
+        val logger: Logger = getLogger()
+        logger.error("Something went wrong, $e")
+    }
 
-@JvmName("getCancellable")
-@ContextDsl
-fun <A> Route.get(path: String, body: suspend PipelineContext<Unit, ApplicationCall>.() -> A): Route =
-    getWithoutCancelling(path) { suspendCancellable { body() } }
+fun logInfo(message: String): Either<Throwable, Unit> =
+    Either.catch {
+        val logger: Logger = getLogger()
+        logger.info(message)
+    }
+
+fun getLogger(): Logger {
+    return LoggerFactory.getLogger("Top level logger")
+}
+
+
+val CONTENT_TYPE = "Content-Type"
+val APPLICATION_JSON = "application/json"

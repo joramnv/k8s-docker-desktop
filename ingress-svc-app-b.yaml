@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-svc-app-b
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /app-b(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-app-b
+                port:
+                  number: 8224
