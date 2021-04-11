@@ -2,8 +2,9 @@ package com.joram
 
 import arrow.core.Either
 import arrow.core.right
+import com.joram.model.CommunicationMethod
 import com.joram.model.WhoIsRequest
-import com.joram.model.WhoIsResponse
+import com.joram.model.toResponse
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.request.receive
@@ -46,7 +47,7 @@ fun Application.moduleA(testing: Boolean = false) {
 
         get("/who") {
             Either.resolve(
-                f = { InvokeClient.invokeServiceB(WhoIsRequest("app-a")) },
+                f = { InvokeClient.invokeServiceB(WhoIsRequest(APP_NAME)) },
                 success = { a -> handleSuccess(call, a) },
                 error = { e -> handleDomainError(call, ::logError, e) },
                 throwable = { throwable -> handleSystemFailure(call, ::logError, throwable) },
@@ -57,14 +58,8 @@ fun Application.moduleA(testing: Boolean = false) {
         post("/who") {
             Either.resolve(
                 f = {
-                    val thisService = "app-a"
                     val whoIsRequest = call.receive<WhoIsRequest>()
-                    val whoIsResponse = WhoIsResponse(
-                        requestFrom = whoIsRequest.requestFrom,
-                        responseFrom = thisService,
-                        message = "Hello ${whoIsRequest.requestFrom}, this is a message from $thisService"
-                    )
-                    whoIsResponse.right()
+                    whoIsRequest.toResponse(APP_NAME, CommunicationMethod.HTTP.name).right()
                 },
                 success = { a -> handleSuccess(call, a) },
                 error = { e -> handleDomainError(call, ::logError, e) },
@@ -74,3 +69,5 @@ fun Application.moduleA(testing: Boolean = false) {
         }
     }
 }
+
+private const val APP_NAME = "app-a"

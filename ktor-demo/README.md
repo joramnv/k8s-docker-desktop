@@ -24,6 +24,8 @@ Running app-a, app-b locally can be done through: `gradlew :app_a:run` or `gradl
 Running Dapr side car locally can be done through:
 ```
 dapr run --app-id app-a --app-port 8123 --dapr-http-port 3500 --dapr-grpc-port 50001 -- waitfor FOREVER
-dapr run --app-id app-b --app-port 8223 --dapr-http-port 3500 --dapr-grpc-port 50001 -- waitfor FOREVER
+dapr run --app-id app-b --app-port 8223 -- waitfor FOREVER
 ```
 (Prerequisite is that you've the Dapr CLI installed on your machine.)
+
+- Note - I had some issues where locally Dapr could not find app-b from app-a and visa versa. I was connected to a VPN, when I turned off the VPN Dapr was functioning as normal again.

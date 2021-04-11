@@ -15,7 +15,7 @@ Steps to deploy distributed apps which are utilizing Dapr:
 ```
 deployment.apps/app-a created
 ```
-3. Deploy app-a: `kubectl apply -f deployment-app-b.yaml`. The result should be similar to:
+3. Deploy app-b: `kubectl apply -f deployment-app-b.yaml`. The result should be similar to:
 ```
 deployment.apps/app-b created
 ```
