@@ -3,17 +3,17 @@
 ## Creating container images:
 1. Run `gradlew clean build`.
 ##### Create and publish container image app-a: 
-2. Run `docker build -t "ktor-demo-app-a:0.0.1-SNAPSHOT-coiuq" ./app_a`.
-3. Run `docker run -d -p 8123:8123 ktor-demo-app-a:0.0.1-SNAPSHOT-coiuq`.
+2. Run `docker build -t "ktor-demo-app-a:0.0.1-SNAPSHOT-powuv" ./app_a`.
+3. Run `docker run -d -p 8123:8123 ktor-demo-app-a:0.0.1-SNAPSHOT-powuv`.
 4. Verify working via browser: `http://localhost:8123` and/or `http://localhost:8123/json/gson`.
-5. Tag the remote repository: `docker tag ktor-demo-app-a:0.0.1-SNAPSHOT-coiuq joramnv/ktor-demo-app-a:0.0.1-SNAPSHOT-coiuq`.
-6. Push the image to the remote repository: `docker push joramnv/ktor-demo-app-a:0.0.1-SNAPSHOT-coiuq` <-- in this case it is public repo! (But you can make a private repo namespace first via the docker hub website.)
+5. Tag the remote repository: `docker tag ktor-demo-app-a:0.0.1-SNAPSHOT-powuv joramnv/ktor-demo-app-a:0.0.1-SNAPSHOT-powuv`.
+6. Push the image to the remote repository: `docker push joramnv/ktor-demo-app-a:0.0.1-SNAPSHOT-powuv` <-- in this case it is public repo! (But you can make a private repo namespace first via the docker hub website.)
 ##### Create and publish container image app-b:
-7. Run `docker build -t "ktor-demo-app-b:0.0.1-SNAPSHOT-coiuq" ./app_b`.
-8. Run `docker run -d -p 8223:8223 ktor-demo-app-b:0.0.1-SNAPSHOT-coiuq`.
+7. Run `docker build -t "ktor-demo-app-b:0.0.1-SNAPSHOT-powuv" ./app_b`.
+8. Run `docker run -d -p 8223:8223 ktor-demo-app-b:0.0.1-SNAPSHOT-powuv`.
 9. Verify working via browser: `http://localhost:8223` and/or `http://localhost:8223/json/gson`.
-10. Tag the remote repository: `docker tag ktor-demo-app-b:0.0.1-SNAPSHOT-coiuq joramnv/ktor-demo-app-b:0.0.1-SNAPSHOT-coiuq`.
-11. Push the image to the remote repository: `docker push joramnv/ktor-demo-app-b:0.0.1-SNAPSHOT-coiuq` <-- in this case it is public repo! (But you can make a private repo namespace first via the docker hub website.)
+10. Tag the remote repository: `docker tag ktor-demo-app-b:0.0.1-SNAPSHOT-powuv joramnv/ktor-demo-app-b:0.0.1-SNAPSHOT-powuv`.
+11. Push the image to the remote repository: `docker push joramnv/ktor-demo-app-b:0.0.1-SNAPSHOT-powuv` <-- in this case it is public repo! (But you can make a private repo namespace first via the docker hub website.)
 12. Continue with `steps-to-set-up-cluster.md` in the parent directory of this project.
 
 

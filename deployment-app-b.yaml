@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: app-b
-          image: joramnv/ktor-demo-app-b:0.0.1-SNAPSHOT-coiuq
+          image: joramnv/ktor-demo-app-b:0.0.1-SNAPSHOT-powuv
           ports:
             - containerPort: 8223
