@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: app-a
-          image: joramnv/ktor-demo-app-a:0.0.1-SNAPSHOT-powuv
+          image: joramnv/ktor-demo-app-a:0.0.1-SNAPSHOT-kjwlu
           ports:
             - containerPort: 8123

@@ -16,10 +16,12 @@ spec:
       annotations:
         dapr.io/enabled: "true"
         dapr.io/app-id: "app-b"
-        dapr.io/app-port: "8223"
+        dapr.io/app-protocol: "grpc"
+        dapr.io/app-port: "48223"
     spec:
       containers:
         - name: app-b
-          image: joramnv/ktor-demo-app-b:0.0.1-SNAPSHOT-powuv
+          image: joramnv/ktor-demo-app-b:0.0.1-SNAPSHOT-kjwlu
           ports:
             - containerPort: 8223
+            - containerPort: 48223
