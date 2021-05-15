@@ -1,6 +1,6 @@
 Steps to deploy distributed apps which are utilizing Dapr:
 
-- These steps assume that the cluster is set up like described in `steps-to-set-up-cluster.md`
+- These steps assume that the cluster is set up like described in `steps-to-set-up-cluster.md`.
     - Steps 2a and 3a could be skipped if you've done all the steps from `steps-to-set-up-cluster.md`. There is no harm in redoing these steps.
 
 1. Install Dapr on your Kubernetes cluster: `dapr init -k` (Prerequisite is that you've the Dapr CLI installed on your machine.) The result should be similar to:
@@ -42,5 +42,5 @@ You can verify that the set up is working by going to http://localhost:55555/app
 
 Also, it should be possible to make a request to one app, which in turn makes a request to the other app:
 
-http://localhost:55555/app-a/who
-http://localhost:55555/app-b/who
+http://localhost:55555/app-a/who2
+http://localhost:55555/app-b/who2
